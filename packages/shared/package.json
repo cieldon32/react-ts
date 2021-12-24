@@ -1,0 +1,13 @@
+{
+  "name": "@react/shared",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {
+    "utility-types": "^3.10.0",
+    "warning": "^4.0.3"
+  },
+  "devDependencies": {
+    "@types/warning": "^3.0.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,49 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "build": "node ./scripts/rollup/build.js",
+    "clean": "rm -rf node_modules yarn.lock packages/*/node_modules"
+  },
+  "devDependencies": {
+    "@babel/code-frame": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/plugin-proposal-class-properties": "^7.16.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.16.5",
+    "@babel/plugin-transform-destructuring": "^7.16.5",
+    "@babel/plugin-transform-flow-strip-types": "^7.16.5",
+    "@babel/plugin-transform-for-of": "^7.16.5",
+    "@babel/plugin-transform-parameters": "^7.16.5",
+    "@babel/plugin-transform-spread": "^7.16.5",
+    "@babel/plugin-transform-template-literals": "^7.16.5",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.1.1",
+    "@rollup/plugin-replace": "^3.0.0",
+    "chalk": "^4.1.2",
+    "cli-table": "^0.3.11",
+    "filesize": "^8.0.6",
+    "google-closure-compiler": "^20211201.0.0",
+    "gzip-size": "^6.0.0",
+    "lerna": "^4.0.0",
+    "minimist": "^1.2.5",
+    "mkdirp": "^1.0.4",
+    "ncp": "^2.0.0",
+    "prettier": "^2.5.1",
+    "react-shallow-renderer": "^16.14.1",
+    "rollup": "^2.61.1",
+    "rollup-plugin-prettier": "^2.2.0",
+    "rollup-plugin-strip-banner": "^2.0.0",
+    "targz": "^1.0.1",
+    "warning": "^4.0.3"
+  },
+  "dependencies": {
+    "csstype": "3.0.10",
+    "loose-envify": "^1.1.0",
+    "object-assign": "^4.1.1",
+    "prop-types": "15.7.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
