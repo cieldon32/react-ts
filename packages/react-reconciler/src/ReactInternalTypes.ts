@@ -96,6 +96,7 @@ export type Fiber = {
   // This is a pooled version of a Fiber. Every fiber that gets updated will
   // eventually have a pair. There are cases when we can clean up pairs to save
   // memory if we need to.
+  // 备用的Fiber节点
   alternate: Fiber | null;
   // Time spent rendering this Fiber and its descendants for the current update.
   // This tells us how well the tree makes use of sCU for memoization.

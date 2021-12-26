@@ -44,6 +44,7 @@ export function getNearestMountedFiber(fiber: Fiber): null | Fiber {
   // that has been unmounted.
   return null;
 }
+
 export function getSuspenseInstanceFromFiber(fiber: Fiber): null | SuspenseInstance {
   if (fiber.tag === SuspenseComponent) {
     let suspenseState: SuspenseState | null = fiber.memoizedState;
@@ -105,6 +106,7 @@ export function findCurrentFiberUsingSlowPath(fiber: Fiber): Fiber | null {
 
   if (!alternate) {
     // If there is no alternate, then we only need to check if it is mounted.
+    // 如果没有备份fiber， 那就确定是否已经渲染了
     const nearestMounted = getNearestMountedFiber(fiber);
 
     if (nearestMounted === null) {
@@ -284,7 +286,9 @@ function findCurrentHostFiberImpl(node: Fiber) {
   return null;
 }
 
-export function findCurrentHostFiberWithNoPortals(parent: Fiber): Fiber | null {
+export function 
+
+findCurrentHostFiberWithNoPortals(parent: Fiber): Fiber | null {
   const currentParent = findCurrentFiberUsingSlowPath(parent);
   return currentParent !== null ? findCurrentHostFiberWithNoPortalsImpl(currentParent) : null;
 }

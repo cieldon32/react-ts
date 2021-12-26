@@ -80,9 +80,17 @@ function warnOnInvalidCallback(callback: unknown, callerName: string): void {
   }
 }
 
-function legacyRenderSubtreeIntoContainer(parentComponent: React.Component<any, any> | null | undefined, children: ReactNodeList, container: Container, forceHydrate: boolean, callback: Function | null | undefined) {
+function legacyRenderSubtreeIntoContainer(
+  parentComponent: React.Component<any, any> | null | undefined, 
+  children: ReactNodeList, 
+  container: Container, 
+  forceHydrate: boolean, 
+  callback: Function | null | undefined
+) {
   if (__DEV__) {
+    // 判斷根節點是否符合規則
     topLevelUpdateWarnings(container);
+    // 存在回調函數的話，驗證是否是函數類型
     warnOnInvalidCallback(callback === undefined ? null : callback, 'render');
   }
 
@@ -179,12 +187,13 @@ export function render(element: React.ReactElement<React.ComponentProps<any>, an
   if (__DEV__) {
     console.error('ReactDOM.render is no longer supported in React 18. Use createRoot ' + 'instead. Until you switch to the new API, your app will behave as ' + "if it's running React 17. Learn " + 'more: https://reactjs.org/link/switch-to-createroot');
   }
-
+  // 判斷是否是有效dom節點
   if (!isValidContainerLegacy(container)) {
     throw new Error('Target container is not a DOM element.');
   }
 
   if (__DEV__) {
+    // 是否已經是根節點
     const isModernRoot = isContainerMarkedAsRoot(container) && container._reactRootContainer === undefined;
 
     if (isModernRoot) {
