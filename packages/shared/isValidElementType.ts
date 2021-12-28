@@ -19,17 +19,17 @@ import {
   REACT_SCOPE_TYPE,
   REACT_LEGACY_HIDDEN_TYPE,
   REACT_OFFSCREEN_TYPE,
-  REACT_CACHE_TYPE,
-} from "./ReactSymbols";
-import { enableScopeAPI, enableCache } from "./ReactFeatureFlags";
+  REACT_CACHE_TYPE
+} from './ReactSymbols';
+import { enableScopeAPI, enableCache } from './ReactFeatureFlags';
 let REACT_MODULE_REFERENCE: number | Symbol = 0;
 
-if (typeof Symbol === "function") {
-  REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
+if (typeof Symbol === 'function') {
+  REACT_MODULE_REFERENCE = Symbol.for('react.module.reference');
 }
 
 export default function isValidElementType(type: unknown) {
-  if (typeof type === "string" || typeof type === "function") {
+  if (typeof type === 'string' || typeof type === 'function') {
     return true;
   }
 
@@ -49,7 +49,7 @@ export default function isValidElementType(type: unknown) {
     return true;
   }
 
-  if (typeof type === "object" && type !== null) {
+  if (typeof type === 'object' && type !== null) {
     if (
       // todo
       // @ts-ignore
@@ -69,8 +69,8 @@ export default function isValidElementType(type: unknown) {
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
-        // todo
-        // @ts-ignore
+      // todo
+      // @ts-ignore
       type.$$typeof === REACT_MODULE_REFERENCE ||
       // todo
       // @ts-ignore

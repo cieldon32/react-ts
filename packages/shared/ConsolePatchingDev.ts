@@ -15,7 +15,7 @@ function disabledLog() {}
 
 disabledLog.__reactDisabledLog = true;
 export function disableLogs(): void {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     if (disabledDepth === 0) {
       /* eslint-disable react-internal/no-production-logging */
@@ -50,7 +50,7 @@ export function disableLogs(): void {
   }
 }
 export function reenableLogs(): void {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     disabledDepth--;
 
@@ -63,33 +63,22 @@ export function reenableLogs(): void {
       };
       // $FlowFixMe Flow thinks console is immutable.
       Object.defineProperties(console, {
-        log: { ...props,
-          value: prevLog
-        },
-        info: { ...props,
-          value: prevInfo
-        },
-        warn: { ...props,
-          value: prevWarn
-        },
-        error: { ...props,
-          value: prevError
-        },
-        group: { ...props,
-          value: prevGroup
-        },
-        groupCollapsed: { ...props,
-          value: prevGroupCollapsed
-        },
-        groupEnd: { ...props,
-          value: prevGroupEnd
-        }
+        log: { ...props, value: prevLog },
+        info: { ...props, value: prevInfo },
+        warn: { ...props, value: prevWarn },
+        error: { ...props, value: prevError },
+        group: { ...props, value: prevGroup },
+        groupCollapsed: { ...props, value: prevGroupCollapsed },
+        groupEnd: { ...props, value: prevGroupEnd }
       });
       /* eslint-enable react-internal/no-production-logging */
     }
 
     if (disabledDepth < 0) {
-      console.error('disabledDepth fell below zero. ' + 'This is a bug in React. Please file an issue.');
+      console.error(
+        'disabledDepth fell below zero. ' +
+          'This is a bug in React. Please file an issue.'
+      );
     }
   }
 }

@@ -6,46 +6,46 @@ export const enableFilterEmptyStringAttributesDOM = false;
 export const enableDebugTracing = false;
 // Adds user timing marks for e.g. state updates, suspense, and work loop stuff,
 // for an experimental timeline tool.
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const enableSchedulingProfiler = __PROFILE__;
 // Helps identify side effects in render-phase lifecycle hooks and setState
 // reducers by double invoking them in StrictLegacyMode.
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const debugRenderPhaseSideEffectsForStrictMode = __DEV__;
 // Helps identify code that is not safe for planned Offscreen API and Suspense semantics;
 // this feature flag only impacts StrictEffectsMode.
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const enableStrictEffects = __DEV__;
 // If TRUE, trees rendered with createRoot will be StrictEffectsMode.
 // If FALSE, these trees will be StrictLegacyMode.
 export const createRootStrictEffectsByDefault = false;
 // To preserve the "Pause on caught exceptions" behavior of the debugger, we
 // replay the begin phase of a failed component inside invokeGuardedCallback.
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const replayFailedUnitOfWorkWithInvokeGuardedCallback = __DEV__;
 // Warn about deprecated, async-unsafe lifecycles; relates to RFC #6:
 export const warnAboutDeprecatedLifecycles = true;
 // Gather advanced timing metrics for Profiler subtrees.
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const enableProfilerTimer = __PROFILE__;
 // Record durations for commit and passive effects phases.
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const enableProfilerCommitHooks = __PROFILE__;
 // Phase param passed to onRender callback differentiates between an "update" and a "cascading-update".
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const enableProfilerNestedUpdatePhase = __PROFILE__;
 // Profiler API accepts a function to be called when a nested update is scheduled.
 // This callback accepts the component type (class instance or function) the update is scheduled for.
 export const enableProfilerNestedUpdateScheduledHook = false;
 // Track which Fiber(s) schedule render work.
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const enableUpdaterTracking = __PROFILE__;
 // SSR experiments
 export const enableSuspenseServerRenderer = true;
 export const enableSelectiveHydration = true;
 // Flight experiments
 export const enableLazyElements = true;
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const enableCache = __EXPERIMENTAL__;
 // Only used in www builds.
 export const enableSchedulerDebugging = false;
@@ -75,7 +75,8 @@ export const enableTrustedTypesIntegration = false;
 export const warnAboutSpreadingKeyToJSX = false;
 export const warnOnSubscriptionInsideStartTransition = false;
 export const enableSuspenseAvoidThisFallback = false;
-export const enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay = true;
+export const enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay =
+  true;
 export const enableClientRenderFallbackOnHydrationMismatch = true;
 export const enableComponentStackLocations = true;
 export const enableNewReconciler = false;
@@ -107,7 +108,7 @@ export const enableSuspenseLayoutEffectSemantics = true;
 // and client rendering, mostly to allow JSX attributes to apply to the custom
 // element's object properties instead of only HTML attributes.
 // https://github.com/facebook/react/issues/11347
-// @ts-expect-error only called in DEV, so void return is not possible.
+// ts-expect-error only called in DEV, so void return is not possible.
 export const enableCustomElementPropertySupport = __EXPERIMENTAL__;
 // --------------------------
 // Future APIs to be deprecated

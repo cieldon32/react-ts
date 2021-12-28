@@ -1,0 +1,35 @@
+{
+  /* Visit https://aka.ms/tsconfig.json to read more about this file */
+  "compilerOptions": {
+    /* Modules */
+    "target": "es2016",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "composite": true,
+    "incremental": true,
+
+    /* Emit */
+    "declaration": true,
+    "removeComments": false,
+    "importHelpers": true,
+    "declarationDir": "./types",
+
+    /* Interop Constraints */
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitThis": false, // TODO: 迁移前屏蔽
+    "noImplicitAny": false, // TODO: 迁移前屏蔽
+    "noUnusedLocals": false, // TODO: 迁移前屏蔽
+    "noUnusedParameters": false, // TODO: 迁移前屏蔽
+    "lib": ["esnext", "dom"],
+
+    /* Completeness */
+    "skipLibCheck": true
+  }
+}
