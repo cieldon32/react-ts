@@ -1,13 +1,11 @@
-import typeof * as FeatureFlagsType from "shared/ReactFeatureFlags";
-import typeof * as ExportsType from "./ReactFeatureFlags.native-fb";
+// import type  * as FeatureFlagsType from "shared/ReactFeatureFlags";
+// import type  * as ExportsType from "./ReactFeatureFlags.native-fb";
 // Re-export dynamic flags from the internal module. Intentionally using *
 // because this import is compiled to a `require` call.
-import * as dynamicFlags from "ReactNativeInternalFeatureFlags";
+import * as dynamicFlags from 'ReactNativeInternalFeatureFlags';
 // We destructure each value before re-exporting to avoid a dynamic look-up on
 // the exports object every time a flag is read.
-export const {
-  enablePersistentOffscreenHostContainer
-} = dynamicFlags;
+export const { enablePersistentOffscreenHostContainer } = dynamicFlags;
 // The rest of the flags are static for better dead code elimination.
 export const enableDebugTracing = false;
 export const enableSchedulingProfiler = __PROFILE__;
@@ -40,7 +38,8 @@ export const warnUnstableRenderSubtreeIntoContainer = false;
 export const warnAboutSpreadingKeyToJSX = false;
 export const warnOnSubscriptionInsideStartTransition = false;
 export const enableSuspenseAvoidThisFallback = false;
-export const enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay = true;
+export const enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay =
+  true;
 export const enableClientRenderFallbackOnHydrationMismatch = true;
 export const enableComponentStackLocations = false;
 export const enableLegacyFBSupport = false;
@@ -65,6 +64,6 @@ export const consoleManagedByDevToolsDuringStrictMode = false;
 export const enableUseMutableSource = true;
 // Flow magic to verify the exports of this file match the original version.
 // eslint-disable-next-line no-unused-vars
-type Check<_X, Y extends _X, X extends Y = _X> = null;
+// type Check<_X, Y extends _X, X extends Y = _X> = null;
 // eslint-disable-next-line no-unused-expressions
-(null as Check<ExportsType, FeatureFlagsType>);
+// (null as Check<ExportsType, FeatureFlagsType>);

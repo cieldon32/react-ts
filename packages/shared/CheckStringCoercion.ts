@@ -7,18 +7,21 @@
  * problem. (Instead of a confusing exception thrown inside the implementation
  * of the `value` object).
  */
-function typeName(value: unknown): string {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+function typeName(value: unknown): string | void {
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     // toStringTag is needed for namespaced types like Temporal.Instant
     const hasToStringTag = typeof Symbol === 'function' && Symbol.toStringTag;
-    const type = hasToStringTag && (value as any)[Symbol.toStringTag] || (value as any).constructor.name || 'Object';
+    const type =
+      (hasToStringTag && (value as any)[Symbol.toStringTag]) ||
+      (value as any).constructor.name ||
+      'Object';
     return type;
   }
 }
 
-function willCoercionThrow(value: unknown): boolean {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+function willCoercionThrow(value: unknown): boolean | void {
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     try {
       testStringCoercion(value);
@@ -56,56 +59,90 @@ function testStringCoercion(value: unknown) {
   return '' + (value as any);
 }
 
-export function checkAttributeStringCoercion(value: unknown, attributeName: string) {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+export function checkAttributeStringCoercion(
+  value: unknown,
+  attributeName: string
+) {
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     if (willCoercionThrow(value)) {
-      console.error('The provided `%s` attribute is an unsupported type %s.' + ' This value must be coerced to a string before before using it here.', attributeName, typeName(value));
+      console.error(
+        'The provided `%s` attribute is an unsupported type %s.' +
+          ' This value must be coerced to a string before before using it here.',
+        attributeName,
+        typeName(value)
+      );
       return testStringCoercion(value); // throw (to help callers find troubleshooting comments)
     }
   }
 }
 export function checkKeyStringCoercion(value: unknown) {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     if (willCoercionThrow(value)) {
-      console.error('The provided key is an unsupported type %s.' + ' This value must be coerced to a string before before using it here.', typeName(value));
+      console.error(
+        'The provided key is an unsupported type %s.' +
+          ' This value must be coerced to a string before before using it here.',
+        typeName(value)
+      );
       return testStringCoercion(value); // throw (to help callers find troubleshooting comments)
     }
   }
 }
 export function checkPropStringCoercion(value: unknown, propName: string) {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     if (willCoercionThrow(value)) {
-      console.error('The provided `%s` prop is an unsupported type %s.' + ' This value must be coerced to a string before before using it here.', propName, typeName(value));
+      console.error(
+        'The provided `%s` prop is an unsupported type %s.' +
+          ' This value must be coerced to a string before before using it here.',
+        propName,
+        typeName(value)
+      );
       return testStringCoercion(value); // throw (to help callers find troubleshooting comments)
     }
   }
 }
-export function checkCSSPropertyStringCoercion(value: unknown, propName: string) {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+export function checkCSSPropertyStringCoercion(
+  value: unknown,
+  propName: string
+) {
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     if (willCoercionThrow(value)) {
-      console.error('The provided `%s` CSS property is an unsupported type %s.' + ' This value must be coerced to a string before before using it here.', propName, typeName(value));
+      console.error(
+        'The provided `%s` CSS property is an unsupported type %s.' +
+          ' This value must be coerced to a string before before using it here.',
+        propName,
+        typeName(value)
+      );
       return testStringCoercion(value); // throw (to help callers find troubleshooting comments)
     }
   }
 }
 export function checkHtmlStringCoercion(value: unknown) {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     if (willCoercionThrow(value)) {
-      console.error('The provided HTML markup uses a value of unsupported type %s.' + ' This value must be coerced to a string before before using it here.', typeName(value));
+      console.error(
+        'The provided HTML markup uses a value of unsupported type %s.' +
+          ' This value must be coerced to a string before before using it here.',
+        typeName(value)
+      );
       return testStringCoercion(value); // throw (to help callers find troubleshooting comments)
     }
   }
 }
 export function checkFormFieldValueStringCoercion(value: unknown) {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     if (willCoercionThrow(value)) {
-      console.error('Form field values (value, checked, defaultValue, or defaultChecked props)' + ' must be strings, not %s.' + ' This value must be coerced to a string before before using it here.', typeName(value));
+      console.error(
+        'Form field values (value, checked, defaultValue, or defaultChecked props)' +
+          ' must be strings, not %s.' +
+          ' This value must be coerced to a string before before using it here.',
+        typeName(value)
+      );
       return testStringCoercion(value); // throw (to help callers find troubleshooting comments)
     }
   }

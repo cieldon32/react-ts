@@ -11,7 +11,7 @@
  */
 let objectIs: (x: any, y: any) => boolean;
 
-if (typeof Object.is === "function") {
+if (typeof Object.is === 'function') {
   objectIs = Object.is;
 } else {
   objectIs = (x: any, y: any) => {

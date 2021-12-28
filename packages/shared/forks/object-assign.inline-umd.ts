@@ -11,20 +11,21 @@ const _assign = function (to, from) {
   }
 };
 
-export default Object.assign || function (target, sources) {
-  if (target == null) {
-    throw new TypeError('Object.assign target cannot be null or undefined');
-  }
-
-  const to = Object(target);
-
-  for (let nextIndex = 1; nextIndex < arguments.length; nextIndex++) {
-    const nextSource = arguments[nextIndex];
-
-    if (nextSource != null) {
-      _assign(to, Object(nextSource));
+export default Object.assign ||
+  function (target, sources) {
+    if (target == null) {
+      throw new TypeError('Object.assign target cannot be null or undefined');
     }
-  }
 
-  return to;
-};
+    const to = Object(target);
+
+    for (let nextIndex = 1; nextIndex < arguments.length; nextIndex++) {
+      const nextSource = arguments[nextIndex];
+
+      if (nextSource != null) {
+        _assign(to, Object(nextSource));
+      }
+    }
+
+    return to;
+  };

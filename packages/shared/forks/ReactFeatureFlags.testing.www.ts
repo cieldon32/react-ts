@@ -1,5 +1,5 @@
-import typeof * as FeatureFlagsType from "shared/ReactFeatureFlags";
-import typeof * as ExportsType from "./ReactFeatureFlags.testing.www";
+// import type * as FeatureFlagsType from "../ReactFeatureFlags";
+// import type * as ExportsType from "./ReactFeatureFlags.testing.www";
 export const debugRenderPhaseSideEffectsForStrictMode = false;
 export const enableDebugTracing = false;
 export const enableSchedulingProfiler = false;
@@ -31,7 +31,8 @@ export const warnUnstableRenderSubtreeIntoContainer = false;
 export const warnAboutSpreadingKeyToJSX = false;
 export const warnOnSubscriptionInsideStartTransition = false;
 export const enableSuspenseAvoidThisFallback = true;
-export const enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay = true;
+export const enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay =
+  true;
 export const enableClientRenderFallbackOnHydrationMismatch = true;
 export const enableComponentStackLocations = true;
 export const enableLegacyFBSupport = !__EXPERIMENTAL__;
@@ -58,6 +59,6 @@ export const consoleManagedByDevToolsDuringStrictMode = false;
 export const enableUseMutableSource = true;
 // Flow magic to verify the exports of this file match the original version.
 // eslint-disable-next-line no-unused-vars
-type Check<_X, Y extends _X, X extends Y = _X> = null;
+// type Check<_X, Y extends _X, X extends Y = _X> = null;
 // eslint-disable-next-line no-unused-expressions
-(null as Check<ExportsType, FeatureFlagsType>);
+// (null as Check<ExportsType, FeatureFlagsType>);

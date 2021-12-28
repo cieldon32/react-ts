@@ -18,8 +18,12 @@ function invokeGuardedCallbackProd<A, B, C, D, E, F, Context>(
   const funcArgs = Array.prototype.slice.call(arguments, 3);
 
   try {
+    // TODO
+    // @ts-ignore
     func.apply(context, funcArgs);
   } catch (error) {
+    // TODO
+    // @ts-ignore
     this.onError(error);
   }
 }
@@ -48,12 +52,12 @@ if (__DEV__) {
   // Check that the browser supports the APIs we need to implement our special
   // DEV version of invokeGuardedCallback
   if (
-    typeof window !== "undefined" &&
-    typeof window.dispatchEvent === "function" &&
-    typeof document !== "undefined" &&
-    typeof document.createEvent === "function"
+    typeof window !== 'undefined' &&
+    typeof window.dispatchEvent === 'function' &&
+    typeof document !== 'undefined' &&
+    typeof document.createEvent === 'function'
   ) {
-    const fakeNode = document.createElement("react");
+    const fakeNode = document.createElement('react');
 
     invokeGuardedCallbackImpl = function invokeGuardedCallbackDev<
       A,
@@ -78,19 +82,19 @@ if (__DEV__) {
       // when we call document.createEvent(). However this can cause confusing
       // errors: https://github.com/facebook/create-react-app/issues/3482
       // So we preemptively throw with a better message instead.
-      if (typeof document === "undefined" || document === null) {
+      if (typeof document === 'undefined' || document === null) {
         throw new Error(
-          "The `document` global was defined when React was initialized, but is not " +
-            "defined anymore. This can happen in a test environment if a component " +
-            "schedules an update from an asynchronous callback, but the test has already " +
-            "finished running. To solve this, you can either unmount the component at " +
-            "the end of your test (and ensure that any asynchronous operations get " +
-            "canceled in `componentWillUnmount`), or you can change the test itself " +
-            "to be asynchronous."
+          'The `document` global was defined when React was initialized, but is not ' +
+            'defined anymore. This can happen in a test environment if a component ' +
+            'schedules an update from an asynchronous callback, but the test has already ' +
+            'finished running. To solve this, you can either unmount the component at ' +
+            'the end of your test (and ensure that any asynchronous operations get ' +
+            'canceled in `componentWillUnmount`), or you can change the test itself ' +
+            'to be asynchronous.'
         );
       }
 
-      const evt = document.createEvent("Event");
+      const evt = document.createEvent('Event');
       let didCall = false;
       // Keeps track of whether the user-provided callback threw an error. We
       // set this to true at the beginning, then set it to false right after
@@ -107,7 +111,7 @@ if (__DEV__) {
       // dispatching: https://github.com/facebook/react/issues/13688
       const windowEventDescriptor = Object.getOwnPropertyDescriptor(
         window,
-        "event"
+        'event'
       );
 
       function restoreAfterDispatch() {
@@ -122,8 +126,8 @@ if (__DEV__) {
         // "Member not found" in strict mode, and in Firefox which does not
         // support window.event.
         if (
-          typeof window.event !== "undefined" &&
-          window.hasOwnProperty("event")
+          typeof window.event !== 'undefined' &&
+          window.hasOwnProperty('event')
         ) {
           window.event = windowEvent;
         }
@@ -137,6 +141,8 @@ if (__DEV__) {
       function callCallback() {
         didCall = true;
         restoreAfterDispatch();
+        // TODO
+        // @ts-ignore
         func.apply(context, funcArgs);
         didError = false;
       }
@@ -169,7 +175,7 @@ if (__DEV__) {
           // Some other error handler has prevented default.
           // Browsers silence the error report if this happens.
           // We'll remember this to later decide whether to log it or not.
-          if (error != null && typeof error === "object") {
+          if (error != null && typeof error === 'object') {
             try {
               error._suppressLogging = true;
             } catch (inner) {
@@ -180,9 +186,9 @@ if (__DEV__) {
       }
 
       // Create a fake event type.
-      const evtType = `react-${name ? name : "invokeguardedcallback"}`;
+      const evtType = `react-${name ? name : 'invokeguardedcallback'}`;
       // Attach our event handlers
-      window.addEventListener("error", handleWindowError);
+      window.addEventListener('error', handleWindowError);
       fakeNode.addEventListener(evtType, callCallback, false);
       // Synchronously dispatch our fake event. If the user-provided function
       // errors, it will trigger our global error handler.
@@ -190,7 +196,7 @@ if (__DEV__) {
       fakeNode.dispatchEvent(evt);
 
       if (windowEventDescriptor) {
-        Object.defineProperty(window, "event", windowEventDescriptor);
+        Object.defineProperty(window, 'event', windowEventDescriptor);
       }
 
       if (didCall && didError) {
@@ -198,21 +204,21 @@ if (__DEV__) {
           // The callback errored, but the error event never fired.
           // eslint-disable-next-line react-internal/prod-error-codes
           error = new Error(
-            "An error was thrown inside one of your components, but React " +
+            'An error was thrown inside one of your components, but React ' +
               "doesn't know what it was. This is likely due to browser " +
               'flakiness. React does its best to preserve the "Pause on ' +
               'exceptions" behavior of the DevTools, which requires some ' +
               "DEV-mode only tricks. It's possible that these don't work in " +
-              "your browser. Try triggering the error in production mode, " +
-              "or switching to a modern browser. If you suspect that this is " +
-              "actually an issue with React, please file an issue."
+              'your browser. Try triggering the error in production mode, ' +
+              'or switching to a modern browser. If you suspect that this is ' +
+              'actually an issue with React, please file an issue.'
           );
         } else if (isCrossOriginError) {
           // eslint-disable-next-line react-internal/prod-error-codes
           error = new Error(
             "A cross-origin error was thrown. React doesn't have access to " +
-              "the actual error object in development. " +
-              "See https://reactjs.org/link/crossorigin-error for more information."
+              'the actual error object in development. ' +
+              'See https://reactjs.org/link/crossorigin-error for more information.'
           );
         }
 
@@ -220,7 +226,7 @@ if (__DEV__) {
       }
 
       // Remove our event listeners
-      window.removeEventListener("error", handleWindowError);
+      window.removeEventListener('error', handleWindowError);
 
       if (!didCall) {
         // Something went really wrong, and our event was not dispatched.
@@ -228,6 +234,8 @@ if (__DEV__) {
         // https://github.com/facebook/react/issues/16585
         // Fall back to the production implementation.
         restoreAfterDispatch();
+        // TODO
+        // @ts-ignore
         return invokeGuardedCallbackProd.apply(this, arguments);
       }
     };

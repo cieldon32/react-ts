@@ -1,4 +1,4 @@
-import invokeGuardedCallbackImpl from "./invokeGuardedCallbackImpl";
+import invokeGuardedCallbackImpl from './invokeGuardedCallbackImpl';
 // Used by Fiber to simulate a try-catch.
 let hasError: boolean = false;
 let caughtError: unknown = null;
@@ -10,7 +10,6 @@ const reporter = {
     hasError = true;
     caughtError = error;
   }
-
 };
 
 /**
@@ -26,9 +25,21 @@ const reporter = {
  * @param {*} context The context to use when calling the function
  * @param {...*} args Arguments for function
  */
-export function invokeGuardedCallback<A, B, C, D, E, F, Context>(name: string | null, func: (a: A, b: B, c: C, d: D, e: E, f: F) => unknown, context: Context, a: A, b: B, c: C, d: D, e: E, f: F): void {
+export function invokeGuardedCallback<A, B, C, D, E, F, Context>(
+  name: string | null,
+  func: (a: A, b: B, c: C, d: D, e: E, f: F) => unknown,
+  context: Context,
+  a: A,
+  b: B,
+  c: C,
+  d: D,
+  e: E,
+  f: F
+): void {
   hasError = false;
   caughtError = null;
+  // TODO
+  // @ts-ignore
   invokeGuardedCallbackImpl.apply(reporter, arguments);
 }
 
@@ -42,7 +53,27 @@ export function invokeGuardedCallback<A, B, C, D, E, F, Context>(name: string | 
  * @param {*} context The context to use when calling the function
  * @param {...*} args Arguments for function
  */
-export function invokeGuardedCallbackAndCatchFirstError<A, B, C, D, E, F, Context>(name: string | null, func: (a: A, b: B, c: C, d: D, e: E, f: F) => void, context: Context, a: A, b: B, c: C, d: D, e: E, f: F): void {
+export function invokeGuardedCallbackAndCatchFirstError<
+  A,
+  B,
+  C,
+  D,
+  E,
+  F,
+  Context
+>(
+  name: string | null,
+  func: (a: A, b: B, c: C, d: D, e: E, f: F) => void,
+  context: Context,
+  a: A,
+  b: B,
+  c: C,
+  d: D,
+  e: E,
+  f: F
+): void {
+  // TODO
+  // @ts-ignore
   invokeGuardedCallback.apply(this, arguments);
 
   if (hasError) {
@@ -77,6 +108,9 @@ export function clearCaughtError() {
     caughtError = null;
     return error;
   } else {
-    throw new Error('clearCaughtError was called but no error was captured. This error ' + 'is likely caused by a bug in React. Please file an issue.');
+    throw new Error(
+      'clearCaughtError was called but no error was captured. This error ' +
+        'is likely caused by a bug in React. Please file an issue.'
+    );
   }
 }

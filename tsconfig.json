@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "esnext",
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "shared/*": ["packages/shared/*"]
+    }
+  },
+  "include": [
+    "packages/global.d.ts",
+    "packages/shared",
+    "test-dts"
+  ],
+  "exclude": ["node_modules"]
+}

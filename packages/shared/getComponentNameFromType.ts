@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import type { LazyComponent } from "react/src/ReactLazy";
-import type { ReactContext, ReactProviderType } from "./ReactTypes";
+import type { LazyComponent } from 'react/src/ReactLazy';
+import type { ReactContext, ReactProviderType } from './ReactTypes';
 
 import {
   REACT_CONTEXT_TYPE,
@@ -19,8 +19,8 @@ import {
   REACT_SUSPENSE_TYPE,
   REACT_SUSPENSE_LIST_TYPE,
   REACT_LAZY_TYPE,
-  REACT_CACHE_TYPE,
-} from "./ReactSymbols";
+  REACT_CACHE_TYPE
+} from './ReactSymbols';
 
 // Keep in sync with react-reconciler/getComponentNameFromFiber
 function getWrappedName(
@@ -34,13 +34,13 @@ function getWrappedName(
     return displayName;
   }
 
-  const functionName = innerType.displayName || innerType.name || "";
-  return functionName !== "" ? `${wrapperName}(${functionName})` : wrapperName;
+  const functionName = innerType.displayName || innerType.name || '';
+  return functionName !== '' ? `${wrapperName}(${functionName})` : wrapperName;
 }
 
 // Keep in sync with react-reconciler/getComponentNameFromFiber
 function getContextName(type: ReactContext<any>) {
-  return type.displayName || "Context";
+  return type.displayName || 'Context';
 }
 // Note that the reconciler package should generally prefer to use getComponentNameFromFiber() instead.
 export default function getComponentNameFromType(type: unknown): string | null {
@@ -50,61 +50,61 @@ export default function getComponentNameFromType(type: unknown): string | null {
   }
 
   if (__DEV__) {
-    if (typeof (type as any).tag === "number") {
+    if (typeof (type as any).tag === 'number') {
       console.error(
-        "Received an unexpected object in getComponentNameFromType(). " +
-          "This is likely a bug in React. Please file an issue."
+        'Received an unexpected object in getComponentNameFromType(). ' +
+          'This is likely a bug in React. Please file an issue.'
       );
     }
   }
 
-  if (typeof type === "function") {
+  if (typeof type === 'function') {
     return (type as any).displayName || type.name || null;
   }
 
-  if (typeof type === "string") {
+  if (typeof type === 'string') {
     return type;
   }
 
   switch (type) {
     case REACT_FRAGMENT_TYPE:
-      return "Fragment";
+      return 'Fragment';
 
     case REACT_PORTAL_TYPE:
-      return "Portal";
+      return 'Portal';
 
     case REACT_PROFILER_TYPE:
-      return "Profiler";
+      return 'Profiler';
 
     case REACT_STRICT_MODE_TYPE:
-      return "StrictMode";
+      return 'StrictMode';
 
     case REACT_SUSPENSE_TYPE:
-      return "Suspense";
+      return 'Suspense';
 
     case REACT_SUSPENSE_LIST_TYPE:
-      return "SuspenseList";
+      return 'SuspenseList';
 
     case REACT_CACHE_TYPE:
-      return "Cache";
+      return 'Cache';
   }
 
-  if (typeof type === "object") {
+  if (typeof type === 'object') {
     // todo
     // @ts-ignore
     switch (type.$$typeof) {
       case REACT_CONTEXT_TYPE:
         const context: ReactContext<any> = type as any;
-        return getContextName(context) + ".Consumer";
+        return getContextName(context) + '.Consumer';
 
       case REACT_PROVIDER_TYPE:
         const provider: ReactProviderType<any> = type as any;
-        return getContextName(provider._context) + ".Provider";
+        return getContextName(provider._context) + '.Provider';
 
       case REACT_FORWARD_REF_TYPE:
         // todo
         // @ts-ignore
-        return getWrappedName(type, type.render, "ForwardRef");
+        return getWrappedName(type, type.render, 'ForwardRef');
 
       case REACT_MEMO_TYPE:
         const outerName = (type as any).displayName || null;
@@ -115,7 +115,7 @@ export default function getComponentNameFromType(type: unknown): string | null {
 
         // todo
         // @ts-ignore
-        return getComponentNameFromType(type.type) || "Memo";
+        return getComponentNameFromType(type.type) || 'Memo';
 
       case REACT_LAZY_TYPE: {
         // todo
