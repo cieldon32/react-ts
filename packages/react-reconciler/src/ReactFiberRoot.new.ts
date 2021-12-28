@@ -1,6 +1,6 @@
 import type { FiberRoot, SuspenseHydrationCallbacks } from "./ReactInternalTypes";
 import type { RootTag } from "./ReactRootTags";
-import { noTimeout, supportsHydration } from "./ReactFiberHostConfig";
+import { noTimeout, supportsHydration, Container } from "./ReactFiberHostConfig";
 import { createHostRootFiber } from "./ReactFiber.new";
 import { NoLane, NoLanes, NoTimestamp, TotalLanes, createLaneMap } from "./ReactFiberLane.new";
 import { enableSuspenseCallback, enableCache, enableProfilerCommitHooks, enableProfilerTimer, enableUpdaterTracking } from "shared/ReactFeatureFlags";
@@ -73,7 +73,15 @@ function FiberRootNode(containerInfo, tag, hydrate, identifierPrefix) {
   }
 }
 
-export function createFiberRoot(containerInfo: any, tag: RootTag, hydrate: boolean, hydrationCallbacks: null | SuspenseHydrationCallbacks, isStrictMode: boolean, concurrentUpdatesByDefaultOverride: null | boolean, identifierPrefix: string): FiberRoot {
+export function createFiberRoot(
+  containerInfo: Container, 
+  tag: RootTag, 
+  hydrate: boolean, 
+  hydrationCallbacks: null | SuspenseHydrationCallbacks, 
+  isStrictMode: boolean, 
+  concurrentUpdatesByDefaultOverride: null | boolean, 
+  identifierPrefix: string
+): FiberRoot {
   const root: FiberRoot = (new FiberRootNode(containerInfo, tag, hydrate, identifierPrefix) as any);
 
   if (enableSuspenseCallback) {

@@ -266,23 +266,26 @@ export function findCurrentHostFiber(parent: Fiber): Fiber | null {
 }
 
 function findCurrentHostFiberImpl(node: Fiber) {
-  // Next we'll drill down this component to find the first HostComponent/Text.
+  // 如果node的tag是HostComponent或HostText， 则表示当前的node是host fiber
   if (node.tag === HostComponent || node.tag === HostText) {
     return node;
   }
-
+  // 如果node的tag都不是如上， 那么获取node的child
   let child = node.child;
 
+  // 如果child不为null
   while (child !== null) {
+    // 确定child是否是host fiber
     const match = findCurrentHostFiberImpl(child);
 
     if (match !== null) {
+      // 如果是， 则返回符合的节点
       return match;
     }
-
+    // 如果不是，则去child的兄弟节点查找
     child = child.sibling;
   }
-
+  // 如果查找结束还没有host fiber， 则返回null
   return null;
 }
 

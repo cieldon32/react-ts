@@ -16,6 +16,7 @@ let topLevelUpdateWarnings;
 if (__DEV__) {
   topLevelUpdateWarnings = (container: Container) => {
     if (container._reactRootContainer && container.nodeType !== COMMENT_NODE) {
+      // 获取当前的host实例
       const hostInstance = findHostInstanceWithNoPortals(container._reactRootContainer.current);
 
       if (hostInstance) {
@@ -30,9 +31,10 @@ if (__DEV__) {
     const hasNonRootReactChild = !!(rootEl && getInstanceFromNode(rootEl));
 
     if (hasNonRootReactChild && !isRootRenderedBySomeReact) {
+      // 如果当前节点没有根节点，则不应该顶用render
       console.error('render(...): Replacing React-rendered children with a new root ' + 'component. If you intended to update the children of this node, ' + 'you should instead have the existing children update their state ' + 'and render the new components instead of calling ReactDOM.render.');
     }
-
+    // 不鼓励将组件直接渲染到 document.body 中
     if (container.nodeType === ELEMENT_NODE && ((container as any) as Element).tagName && ((container as any) as Element).tagName.toUpperCase() === 'BODY') {
       console.error('render(): Rendering components directly into document.body is ' + 'discouraged, since its children are often manipulated by third-party ' + 'scripts and browser extensions. This may lead to subtle ' + 'reconciliation issues. Try rendering into a container element created ' + 'for your app.');
     }

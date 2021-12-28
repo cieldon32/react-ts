@@ -303,12 +303,13 @@ export { getCurrentUpdatePriority, runWithPriority };
 export { findHostInstance };
 export { findHostInstanceWithWarning };
 export function findHostInstanceWithNoPortals(fiber: Fiber): PublicInstance | null {
+  // 查找传入fiber是否是host fiber
   const hostFiber = findCurrentHostFiberWithNoPortals(fiber);
 
   if (hostFiber === null) {
     return null;
   }
-
+  // 如果传入的Fiber有host fiber， 则返回fiber的stateNode
   return hostFiber.stateNode;
 }
 

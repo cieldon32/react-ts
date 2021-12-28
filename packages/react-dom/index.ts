@@ -22,6 +22,9 @@ export {
    * 来加速初次渲染的功能。
    * 主要使用场景是服务端渲染或者像prerender等情况。*/
   hydrate,
+  /**
+   * 18开始将被废弃的入口函数
+   */
   render,
   unmountComponentAtNode,
   unstable_batchedUpdates,
