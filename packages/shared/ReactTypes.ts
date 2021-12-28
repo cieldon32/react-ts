@@ -1,5 +1,11 @@
-import { $NonMaybeType } from "utility-types";
-export type ReactNode = React.ReactElement<React.ComponentProps<any>, any> | ReactPortal | ReactText | ReactFragment | ReactProvider<any> | ReactConsumer<any>;
+import { $NonMaybeType } from 'utility-types';
+export type ReactNode =
+  | React.ReactElement<React.ComponentProps<any>, any>
+  | ReactPortal
+  | ReactText
+  | ReactFragment
+  | ReactProvider<any>
+  | ReactConsumer<any>;
 export type ReactEmpty = null | void | boolean;
 export type ReactFragment = ReactEmpty | Iterable<React.ReactNode>;
 export type ReactNodeList = ReactEmpty | React.ReactNode;
@@ -55,9 +61,15 @@ export type RefObject = {
 export type ReactScope = {
   $$typeof: Symbol | number;
 };
-export type ReactScopeQuery = (type: string, props: Record<string, unknown>, instance: unknown) => boolean;
+export type ReactScopeQuery = (
+  type: string,
+  props: Record<string, unknown>,
+  instance: unknown
+) => boolean;
 export type ReactScopeInstance = {
-  DO_NOT_USE_queryAllNodes(arg0: ReactScopeQuery): null | Array<Record<string, any>>;
+  DO_NOT_USE_queryAllNodes(
+    arg0: ReactScopeQuery
+  ): null | Array<Record<string, any>>;
   DO_NOT_USE_queryFirstNode(arg0: ReactScopeQuery): null | Record<string, any>;
   containsNode(arg0: Record<string, any>): boolean;
   getChildContextValues: <T>(context: ReactContext<T>) => Array<T>;
@@ -65,9 +77,17 @@ export type ReactScopeInstance = {
 // Mutable source version can be anything (e.g. number, string, immutable data structure)
 // so long as it changes every time any part of the source changes.
 export type MutableSourceVersion = $NonMaybeType<unknown>;
-export type MutableSourceGetSnapshotFn<Source extends $NonMaybeType<unknown>, Snapshot> = (source: Source) => Snapshot;
-export type MutableSourceSubscribeFn<Source extends $NonMaybeType<unknown>, Snapshot> = (source: Source, callback: (snapshot: Snapshot) => void) => () => void;
-export type MutableSourceGetVersionFn = (source: $NonMaybeType<unknown>) => MutableSourceVersion;
+export type MutableSourceGetSnapshotFn<
+  Source extends $NonMaybeType<unknown>,
+  Snapshot
+> = (source: Source) => Snapshot;
+export type MutableSourceSubscribeFn<
+  Source extends $NonMaybeType<unknown>,
+  Snapshot
+> = (source: Source, callback: (snapshot: Snapshot) => void) => () => void;
+export type MutableSourceGetVersionFn = (
+  source: $NonMaybeType<unknown>
+) => MutableSourceVersion;
 export type MutableSource<Source extends $NonMaybeType<unknown>> = {
   _source: Source;
   _getVersion: MutableSourceGetVersionFn;
@@ -104,6 +124,12 @@ export interface Wakeable {
 // This doesn't require a return value neither from the handler nor the
 // then function.
 export interface Thenable<R> {
-  then<U>(onFulfill: (value: R) => void | Thenable<U> | U, onReject: (error: unknown) => void | Thenable<U> | U): void | Thenable<U>;
+  then<U>(
+    onFulfill: (value: R) => void | Thenable<U> | U,
+    onReject: (error: unknown) => void | Thenable<U> | U
+  ): void | Thenable<U>;
 }
-export type OffscreenMode = "hidden" | "unstable-defer-without-hiding" | "visible";
+export type OffscreenMode =
+  | 'hidden'
+  | 'unstable-defer-without-hiding'
+  | 'visible';

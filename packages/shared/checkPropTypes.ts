@@ -4,16 +4,16 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { describeUnknownElementTypeFrameInDEV } from "./ReactComponentStackFrame";
-import ReactSharedInternals from "./ReactSharedInternals";
-import hasOwnProperty from "./hasOwnProperty";
+import { describeUnknownElementTypeFrameInDEV } from './ReactComponentStackFrame';
+import ReactSharedInternals from './ReactSharedInternals';
+import hasOwnProperty from './hasOwnProperty';
 
 const loggedTypeFailures: Record<string, any> = {};
 const ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
 
 // todo
 function setCurrentlyValidatingElement(element: any) {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     if (element) {
       const owner = element._owner;
@@ -36,7 +36,7 @@ export default function checkPropTypes(
   componentName: string | null | undefined,
   element?: any
 ): void {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     // $FlowFixMe This is okay but Flow doesn't know it.
     const has = Function.call.bind(hasOwnProperty);
@@ -51,21 +51,21 @@ export default function checkPropTypes(
         try {
           // This is intentionally an invariant that gets caught. It's the same
           // behavior as without this statement except with a better message.
-          if (typeof typeSpecs[typeSpecName] !== "function") {
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
             // eslint-disable-next-line react-internal/prod-error-codes
             const err = Error(
-              (componentName || "React class") +
-                ": " +
+              (componentName || 'React class') +
+                ': ' +
                 location +
-                " type `" +
+                ' type `' +
                 typeSpecName +
-                "` is invalid; " +
-                "it must be a function, usually from the `prop-types` package, but received `" +
+                '` is invalid; ' +
+                'it must be a function, usually from the `prop-types` package, but received `' +
                 typeof typeSpecs[typeSpecName] +
-                "`." +
-                "This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`."
+                '`.' +
+                'This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.'
             );
-            err.name = "Invariant Violation";
+            err.name = 'Invariant Violation';
             throw err;
           }
 
@@ -75,7 +75,7 @@ export default function checkPropTypes(
             componentName,
             location,
             null,
-            "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED"
+            'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED'
           );
         } catch (ex) {
           error = ex;
@@ -84,13 +84,13 @@ export default function checkPropTypes(
         if (error && !(error instanceof Error)) {
           setCurrentlyValidatingElement(element);
           console.error(
-            "%s: type specification of %s" +
-              " `%s` is invalid; the type checker " +
-              "function must return `null` or an `Error` but returned a %s. " +
-              "You may have forgotten to pass an argument to the type checker " +
-              "creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and " +
-              "shape all require an argument).",
-            componentName || "React class",
+            '%s: type specification of %s' +
+              ' `%s` is invalid; the type checker ' +
+              'function must return `null` or an `Error` but returned a %s. ' +
+              'You may have forgotten to pass an argument to the type checker ' +
+              'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
+              'shape all require an argument).',
+            componentName || 'React class',
             location,
             typeSpecName,
             typeof error
@@ -103,7 +103,7 @@ export default function checkPropTypes(
           // same error.
           loggedTypeFailures[error.message] = true;
           setCurrentlyValidatingElement(element);
-          console.error("Failed %s type: %s", location, error.message);
+          console.error('Failed %s type: %s', location, error.message);
           setCurrentlyValidatingElement(null);
         }
       }

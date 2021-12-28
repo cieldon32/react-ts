@@ -32,11 +32,13 @@ function printWarning(level, format, args) {
   if (__DEV__) {
     const React = require('react');
 
-    const ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    const ReactSharedInternals =
+      React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
 
     // Defensive in case this is fired before React is initialized.
     if (ReactSharedInternals != null) {
-      const ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+      const ReactDebugCurrentFrame =
+        ReactSharedInternals.ReactDebugCurrentFrame;
       const stack = ReactDebugCurrentFrame.getStackAddendum();
 
       if (stack !== '') {

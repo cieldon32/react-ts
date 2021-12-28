@@ -1,31 +1,46 @@
-import type { Source } from "shared/ReactElementType";
-import type { LazyComponent } from "react/src/ReactLazy";
-import { enableComponentStackLocations, disableNativeComponentFrames } from "shared/ReactFeatureFlags";
-import { REACT_SUSPENSE_TYPE, REACT_SUSPENSE_LIST_TYPE, REACT_FORWARD_REF_TYPE, REACT_MEMO_TYPE, REACT_LAZY_TYPE } from "shared/ReactSymbols";
-import { disableLogs, reenableLogs } from "shared/ConsolePatchingDev";
-import ReactSharedInternals from "shared/ReactSharedInternals";
-const {
-  ReactCurrentDispatcher
-} = ReactSharedInternals;
+import type { Source } from 'shared/ReactElementType';
+import type { LazyComponent } from 'react/src/ReactLazy';
+import {
+  enableComponentStackLocations,
+  disableNativeComponentFrames
+} from 'shared/ReactFeatureFlags';
+import {
+  REACT_SUSPENSE_TYPE,
+  REACT_SUSPENSE_LIST_TYPE,
+  REACT_FORWARD_REF_TYPE,
+  REACT_MEMO_TYPE,
+  REACT_LAZY_TYPE
+} from 'shared/ReactSymbols';
+import { disableLogs, reenableLogs } from 'shared/ConsolePatchingDev';
+import ReactSharedInternals from 'shared/ReactSharedInternals';
+const { ReactCurrentDispatcher } = ReactSharedInternals;
 let prefix;
-export function describeBuiltInComponentFrame(name: string, source: void | null | Source, ownerFn: void | null | Function): string {
+export function describeBuiltInComponentFrame(
+  name: string,
+  source: void | null | Source,
+  ownerFn: void | null | Function
+): string {
   if (enableComponentStackLocations) {
     if (prefix === undefined) {
       // Extract the VM specific prefix used by each line.
       try {
         throw Error();
       } catch (x) {
-        const match = x.stack.trim().match(/\n( *(at )?)/);
-        prefix = match && match[1] || '';
+        const match = (x as Error).stack!.trim().match(/\n( *(at )?)/);
+        prefix = (match && match[1]) || '';
       }
     }
 
     // We use the prefix to ensure our stacks line up with native stack frames.
+    // TODO
+    // @ts-ignore
     return '\n' + prefix + name;
   } else {
     let ownerName = null;
-    // @ts-expect-error only called in DEV, so void return is not possible.
+    // ts-expect-error only called in DEV, so void return is not possible.
     if (__DEV__ && ownerFn) {
+      // TODO
+      // @ts-ignore
       ownerName = ownerFn.displayName || ownerFn.name || null;
     }
 
@@ -33,19 +48,23 @@ export function describeBuiltInComponentFrame(name: string, source: void | null 
   }
 }
 let reentry = false;
-let componentFrameCache;
-// @ts-expect-error only called in DEV, so void return is not possible.
+let componentFrameCache: any;
+
+// ts-expect-error only called in DEV, so void return is not possible.
 if (__DEV__) {
   const PossiblyWeakMap = typeof WeakMap === 'function' ? WeakMap : Map;
   componentFrameCache = new PossiblyWeakMap();
 }
 
-export function describeNativeComponentFrame(fn: (...args: Array<any>) => any, construct: boolean): string {
+export function describeNativeComponentFrame(
+  fn: (...args: Array<any>) => any & { displayName?: string },
+  construct: boolean
+): string {
   // If something asked for a stack inside a fake render, it should get ignored.
   if (disableNativeComponentFrames || !fn || reentry) {
     return '';
   }
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     const frame = componentFrameCache.get(fn);
 
@@ -60,7 +79,7 @@ export function describeNativeComponentFrame(fn: (...args: Array<any>) => any, c
   // $FlowFixMe It does accept undefined.
   Error.prepareStackTrace = undefined;
   let previousDispatcher;
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     previousDispatcher = ReactCurrentDispatcher.current;
     // Set the dispatcher in DEV because this might be call in the render function
@@ -98,6 +117,8 @@ export function describeNativeComponentFrame(fn: (...args: Array<any>) => any, c
         Reflect.construct(fn, [], Fake);
       } else {
         try {
+          // TODO
+          // @ts-ignore
           Fake.call();
         } catch (x) {
           control = x;
@@ -116,10 +137,16 @@ export function describeNativeComponentFrame(fn: (...args: Array<any>) => any, c
     }
   } catch (sample) {
     // This is inlined manually because closure doesn't do it for us.
+    // TODO
+    // @ts-ignore
     if (sample && control && typeof sample.stack === 'string') {
       // This extracts the first frame from the sample that isn't also in the control.
       // Skipping one frame that we assume is the frame that calls the two.
+      // TODO
+      // @ts-ignore
       const sampleLines = sample.stack.split('\n');
+      // TODO
+      // @ts-ignore
       const controlLines = control.stack.split('\n');
       let s = sampleLines.length - 1;
       let c = controlLines.length - 1;
@@ -157,10 +184,14 @@ export function describeNativeComponentFrame(fn: (...args: Array<any>) => any, c
                 // If our component frame is labeled "<anonymous>"
                 // but we have a user-provided "displayName"
                 // splice it in to make the stack more readable.
+                // TODO
+                // @ts-ignore
                 if (fn.displayName && frame.includes('<anonymous>')) {
+                  // TODO
+                  // @ts-ignore
                   frame = frame.replace('<anonymous>', fn.displayName);
                 }
-                // @ts-expect-error only called in DEV, so void return is not possible.
+                // ts-expect-error only called in DEV, so void return is not possible.
                 if (__DEV__) {
                   if (typeof fn === 'function') {
                     componentFrameCache.set(fn, frame);
@@ -179,7 +210,7 @@ export function describeNativeComponentFrame(fn: (...args: Array<any>) => any, c
     }
   } finally {
     reentry = false;
-    // @ts-expect-error only called in DEV, so void return is not possible.
+    // ts-expect-error only called in DEV, so void return is not possible.
     if (__DEV__) {
       ReactCurrentDispatcher.current = previousDispatcher;
       reenableLogs();
@@ -189,9 +220,11 @@ export function describeNativeComponentFrame(fn: (...args: Array<any>) => any, c
   }
 
   // Fallback to just using the name if we couldn't make it throw.
+  // TODO
+  // @ts-ignore
   const name = fn ? fn.displayName || fn.name : '';
   const syntheticFrame = name ? describeBuiltInComponentFrame(name) : '';
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__) {
     if (typeof fn === 'function') {
       componentFrameCache.set(fn, syntheticFrame);
@@ -202,9 +235,13 @@ export function describeNativeComponentFrame(fn: (...args: Array<any>) => any, c
 }
 const BEFORE_SLASH_RE = /^(.*)[\\\/]/;
 
-function describeComponentFrame(name: null | string, source: void | null | Source, ownerName: null | string) {
+function describeComponentFrame(
+  name: null | string,
+  source: void | null | Source,
+  ownerName: null | string
+) {
   let sourceInfo = '';
-  // @ts-expect-error only called in DEV, so void return is not possible.
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (__DEV__ && source) {
     const path = source.fileName;
     let fileName = path.replace(BEFORE_SLASH_RE, '');
@@ -232,15 +269,27 @@ function describeComponentFrame(name: null | string, source: void | null | Sourc
   return '\n    in ' + (name || 'Unknown') + sourceInfo;
 }
 
-export function describeClassComponentFrame(ctor: Function, source: void | null | Source, ownerFn: void | null | Function): string {
+export function describeClassComponentFrame(
+  ctor: Function,
+  source: void | null | Source,
+  ownerFn: void | null | Function
+): string {
   if (enableComponentStackLocations) {
+    // TODO
+    // @ts-ignore
     return describeNativeComponentFrame(ctor, true);
   } else {
     return describeFunctionComponentFrame(ctor, source, ownerFn);
   }
 }
-export function describeFunctionComponentFrame(fn: Function, source: void | null | Source, ownerFn: void | null | Function): string {
+export function describeFunctionComponentFrame(
+  fn: Function & { displayName?: string },
+  source: void | null | Source,
+  ownerFn: void | null | Function
+): string {
   if (enableComponentStackLocations) {
+    // TODO
+    // @ts-ignore
     return describeNativeComponentFrame(fn, false);
   } else {
     if (!fn) {
@@ -249,8 +298,10 @@ export function describeFunctionComponentFrame(fn: Function, source: void | null
 
     const name = fn.displayName || fn.name || null;
     let ownerName = null;
-  // @ts-expect-error only called in DEV, so void return is not possible.
+    // ts-expect-error only called in DEV, so void return is not possible.
     if (__DEV__ && ownerFn) {
+      // TODO
+      // @ts-ignore
       ownerName = ownerFn.displayName || ownerFn.name || null;
     }
 
@@ -263,8 +314,12 @@ function shouldConstruct(Component: Function) {
   return !!(prototype && prototype.isReactComponent);
 }
 
-export function describeUnknownElementTypeFrameInDEV(type: any, source: void | null | Source, ownerFn: void | null | Function): string {
-  // @ts-expect-error only called in DEV, so void return is not possible.
+export function describeUnknownElementTypeFrameInDEV(
+  type: any,
+  source: void | null | Source,
+  ownerFn: void | null | Function
+): string {
+  // ts-expect-error only called in DEV, so void return is not possible.
   if (!__DEV__) {
     return '';
   }
@@ -302,17 +357,20 @@ export function describeUnknownElementTypeFrameInDEV(type: any, source: void | n
         // Memo may contain any component type so we recursively resolve it.
         return describeUnknownElementTypeFrameInDEV(type.type, source, ownerFn);
 
-      case REACT_LAZY_TYPE:
-        {
-          const lazyComponent: LazyComponent<any, any> = (type as any);
-          const payload = lazyComponent._payload;
-          const init = lazyComponent._init;
+      case REACT_LAZY_TYPE: {
+        const lazyComponent: LazyComponent<any, any> = type as any;
+        const payload = lazyComponent._payload;
+        const init = lazyComponent._init;
 
-          try {
-            // Lazy may contain any component type so we recursively resolve it.
-            return describeUnknownElementTypeFrameInDEV(init(payload), source, ownerFn);
-          } catch (x) {}
-        }
+        try {
+          // Lazy may contain any component type so we recursively resolve it.
+          return describeUnknownElementTypeFrameInDEV(
+            init(payload),
+            source,
+            ownerFn
+          );
+        } catch (x) {}
+      }
     }
   }
 

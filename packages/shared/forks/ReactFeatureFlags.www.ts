@@ -1,6 +1,17 @@
-import typeof * as FeatureFlagsType from "shared/ReactFeatureFlags";
-import typeof * as ExportsType from "./ReactFeatureFlags.www";
-import typeof * as DynamicFeatureFlags from "./ReactFeatureFlags.www-dynamic";
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// import * as FeatureFlagsType from '../ReactFeatureFlags';
+// import * as ExportsType from './ReactFeatureFlags.www';
+import type * as DynamicFeatureFlags from './ReactFeatureFlags.www-dynamic';
+
+// type FeatureFlagsType = typeof FeatureFlagsType
+// type ExportsType = typeof ExportsType
+type DynamicFeatureFlags = typeof DynamicFeatureFlags;
 
 // Re-export dynamic flags from the www version.
 const dynamicFeatureFlags: DynamicFeatureFlags = require('ReactFeatureFlags');
@@ -26,19 +37,25 @@ export const {
   enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay,
   enableClientRenderFallbackOnHydrationMismatch
 } = dynamicFeatureFlags;
+
 // On WWW, __EXPERIMENTAL__ is used for a new modern build.
 // It's not used anywhere in production yet.
-export const enableStrictEffects = __DEV__ && dynamicFeatureFlags.enableStrictEffects;
+
+export const enableStrictEffects =
+  __DEV__ && dynamicFeatureFlags.enableStrictEffects;
 export const debugRenderPhaseSideEffectsForStrictMode = __DEV__;
 export const enableProfilerTimer = __PROFILE__;
 export const enableProfilerCommitHooks = __PROFILE__;
 export const enableProfilerNestedUpdatePhase = __PROFILE__;
-export const enableProfilerNestedUpdateScheduledHook = __PROFILE__ && dynamicFeatureFlags.enableProfilerNestedUpdateScheduledHook;
+export const enableProfilerNestedUpdateScheduledHook =
+  __PROFILE__ && dynamicFeatureFlags.enableProfilerNestedUpdateScheduledHook;
 export const enableUpdaterTracking = __PROFILE__;
 export const enableSuspenseLayoutEffectSemantics = true;
 export const enableSuspenseAvoidThisFallback = true;
 // Logs additional User Timing API marks for use with an experimental profiling tool.
-export const enableSchedulingProfiler = __PROFILE__ && dynamicFeatureFlags.enableSchedulingProfiler;
+export const enableSchedulingProfiler =
+  __PROFILE__ && dynamicFeatureFlags.enableSchedulingProfiler;
+
 // Note: we'll want to remove this when we to userland implementation.
 // For now, we'll turn it on for everyone because it's *already* on for everyone in practice.
 // At least this will let us stop shipping <Profiler> implementation to all users.
@@ -72,8 +89,9 @@ export const consoleManagedByDevToolsDuringStrictMode = true;
 // Some www surfaces are still using this. Remove once they have been migrated.
 export const enableUseMutableSource = true;
 export const enableCustomElementPropertySupport = __EXPERIMENTAL__;
-// Flow magic to verify the exports of this file match the original version.
-// eslint-disable-next-line no-unused-vars
-type Check<_X, Y extends _X, X extends Y = _X> = null;
-// eslint-disable-next-line no-unused-expressions
-(null as Check<ExportsType, FeatureFlagsType>);
+
+// // Flow magic to verify the exports of this file match the original version.
+// // eslint-disable-next-line no-unused-vars
+// type Check<_X, Y: _X, X: Y = _X> = null;
+// // eslint-disable-next-line no-unused-expressions
+// (null: Check<ExportsType, FeatureFlagsType>);

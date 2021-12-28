@@ -9,5 +9,4 @@
 const ReactFeatureFlags = require('../ReactFeatureFlags');
 
 // Forbid writes because this wouldn't work with bundle tests.
-module.exports = Object.freeze({ ...ReactFeatureFlags
-});
+export default Object.freeze({ ...ReactFeatureFlags });
